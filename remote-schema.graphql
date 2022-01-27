@@ -1,0 +1,28 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Mutation {
+    register(options: UserDetails!): User!
+}
+
+type Query {
+    hello: String!
+    users: [User!]!
+}
+
+type User {
+    age: Float!
+    firstName: String!
+    id: Float!
+    lastName: String!
+}
+
+input UserDetails {
+    age: Float!
+    firstName: String!
+    lastName: String!
+}
