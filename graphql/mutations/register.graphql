@@ -1,13 +1,8 @@
-mutation Register($options: UserDetails!) {
-  register(options: $options) {
-    id
-    email
-    password
-    company
-    description
-    contactName
-    facebook
-    instagram
-    twitter
+mutation Register($password: String!, $email: String!) {
+  register(password: $password, email: $email) {
+    user {
+      email
+      password
+    }
   }
 }

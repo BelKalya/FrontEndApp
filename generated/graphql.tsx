@@ -15,14 +15,28 @@ export type Scalars = {
   Float: number;
 };
 
+export type FieldError = {
+  __typename?: 'FieldError';
+  field: Scalars['String'];
+  message: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  register: User;
+  login: UserResponse;
+  register: UserResponse;
+};
+
+
+export type MutationLoginArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 
 export type MutationRegisterArgs = {
-  options: UserDetails;
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type Query = {
@@ -33,48 +47,37 @@ export type Query = {
 
 export type User = {
   __typename?: 'User';
-  company: Scalars['String'];
-  contactName: Scalars['String'];
-  description: Scalars['String'];
+  company?: Maybe<Scalars['String']>;
+  contactName?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   email: Scalars['String'];
-  facebook: Scalars['String'];
+  facebook?: Maybe<Scalars['String']>;
   id: Scalars['Float'];
-  instagram: Scalars['String'];
+  instagram?: Maybe<Scalars['String']>;
   password: Scalars['String'];
-  twitter: Scalars['String'];
+  twitter?: Maybe<Scalars['String']>;
 };
 
-export type UserDetails = {
-  company?: InputMaybe<Scalars['String']>;
-  contactName?: InputMaybe<Scalars['String']>;
-  description?: InputMaybe<Scalars['String']>;
-  email: Scalars['String'];
-  facebook?: InputMaybe<Scalars['String']>;
-  instagram?: InputMaybe<Scalars['String']>;
-  password: Scalars['String'];
-  twitter?: InputMaybe<Scalars['String']>;
+export type UserResponse = {
+  __typename?: 'UserResponse';
+  errors?: Maybe<Array<FieldError>>;
+  user?: Maybe<User>;
 };
 
 export type RegisterMutationVariables = Exact<{
-  options: UserDetails;
+  password: Scalars['String'];
+  email: Scalars['String'];
 }>;
 
-
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', id: number, email: string, password: string, company: string, description: string, contactName: string, facebook: string, instagram: string, twitter: string } };
-
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', email: string, password: string } | null | undefined } };
 
 export const RegisterDocument = gql`
-    mutation Register($options: UserDetails!) {
-  register(options: $options) {
-    id
-    email
-    password
-    company
-    description
-    contactName
-    facebook
-    instagram
-    twitter
+    mutation Register($password: String!, $email: String!) {
+  register(password: $password, email: $email) {
+    user {
+      email
+      password
+    }
   }
 }
     `;
@@ -93,14 +96,15 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  * @example
  * const [registerMutation, { data, loading, error }] = useRegisterMutation({
  *   variables: {
- *      options: // value for 'options'
+ *      password: // value for 'password'
+ *      email: // value for 'email'
  *   },
  * });
  */
 export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
-      }
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+}
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;

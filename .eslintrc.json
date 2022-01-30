@@ -62,5 +62,12 @@
         "no-unused-vars": "warn",
         "object-curly-newline": "off",
         "lines-between-class-members": "off"
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [".ts", ".tsx", ".native.js"]
+        }
+      }
     }
 }
