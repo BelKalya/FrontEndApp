@@ -17,7 +17,7 @@ const AboutPage = () => {
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     validate={(values) => {
-                        const errors = { email: '', password: '' };
+                        const errors = {};
                         if (!values.email) {
                             errors.email = REQUIRED;
                         } else if (!EMAIL_VALIDATION_REGEXP.test(values.email)) {
@@ -30,10 +30,11 @@ const AboutPage = () => {
                         }
                         return errors;
                     }}
-                    onSubmit={(values, { setSubmitting }) => {
-                        const response = registerMutation({
+                    onSubmit={async (values, { setStatus }) => {
+                        const response = await registerMutation({
                             variables: values,
                         });
+                        setStatus(response.data.register.errors[0].message);
                     }}
                 >
                     {({
@@ -43,12 +44,16 @@ const AboutPage = () => {
                         handleChange,
                         handleBlur,
                         handleSubmit,
+                        status,
                         isSubmitting,
                     }) => (
                         <form onSubmit={handleSubmit}>
+                            {status
+                            && <span>{status}</span>}
                             <FormControl>
                                 <FormLabel htmlFor="email">Email</FormLabel>
                                 <Input
+                                    id="email"
                                     type="email"
                                     name="email"
                                     onChange={handleChange}
@@ -60,6 +65,7 @@ const AboutPage = () => {
                             <FormControl>
                                 <FormLabel htmlFor="password">Password</FormLabel>
                                 <Input
+                                    id="password"
                                     type="password"
                                     name="password"
                                     onChange={handleChange}
