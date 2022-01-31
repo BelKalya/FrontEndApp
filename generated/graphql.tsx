@@ -55,7 +55,6 @@ export type User = {
   facebook?: Maybe<Scalars['String']>;
   id: Scalars['Float'];
   instagram?: Maybe<Scalars['String']>;
-  password: Scalars['String'];
   twitter?: Maybe<Scalars['String']>;
 };
 
@@ -84,7 +83,7 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', email: string, password: string } | null | undefined } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', email: string, twitter?: string | null | undefined, instagram?: string | null | undefined, id: number, facebook?: string | null | undefined, description?: string | null | undefined, contactName?: string | null | undefined, company?: string | null | undefined } | null | undefined, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null | undefined } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -174,7 +173,17 @@ export const RegisterDocument = gql`
   register(password: $password, email: $email) {
     user {
       email
-      password
+      twitter
+      instagram
+      id
+      facebook
+      description
+      contactName
+      company
+    }
+    errors {
+      field
+      message
     }
   }
 }

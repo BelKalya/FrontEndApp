@@ -8,11 +8,12 @@ type FormInputProps = {
     handleBlur: {(e: React.FocusEvent<any, Element>): void, <T=any>(fieldOrEvent: T): T extends string ? ((e: any) => void) : void},
     value: string,
     error: string | undefined,
+    touched: boolean,
 }
 
-const FormInput = ({ error, handleChange, handleBlur, value, name, label }: FormInputProps) => {
+const FormInput = ({ error, handleChange, handleBlur, value, name, label, touched }: FormInputProps) => {
     return (
-        <FormControl mb={2} isInvalid={!!error}>
+        <FormControl mb={2} isInvalid={!!error && touched}>
             <FormLabel htmlFor={name}>{label}</FormLabel>
             <Input
                 type={name}
@@ -21,7 +22,7 @@ const FormInput = ({ error, handleChange, handleBlur, value, name, label }: Form
                 onBlur={handleBlur}
                 value={value}
             />
-            {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
+            {(error && touched) ? <FormErrorMessage>{error}</FormErrorMessage> : null}
         </FormControl>
     );
 };

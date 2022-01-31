@@ -14,7 +14,7 @@ export const Layout = ({
                            children,
                            title = "This is the default title",
                        }: Props) => (
-    <html>
+    <>
         <Head>
             <title>{title}</title>
             <meta charSet="utf-8"/>
@@ -38,12 +38,10 @@ export const Layout = ({
                 </Container>
             </Box>
         </header>
-        <body>
-            <main>
-                <Container maxWidth={"container.xl"}>
-                    {children}
-                </Container>
-            </main>
-        </body>
-    </html>
+        <main>
+            <Container maxWidth={"container.xl"}>
+                {children}
+            </Container>
+        </main>
+    </>
 )
