@@ -1,6 +1,10 @@
+import {ChakraProvider} from "@chakra-ui/provider";
+
 function MyApp({ Component, pageProps }: any) {
     return (
+        <ChakraProvider>
         <Component {...pageProps} />
+        </ChakraProvider>
     );
 }
 

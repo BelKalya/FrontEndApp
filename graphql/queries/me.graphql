@@ -1,0 +1,12 @@
+query Me {
+    me {
+        id
+        email
+        company
+        description
+        contactName
+        facebook
+        instagram
+        twitter
+    }
+}

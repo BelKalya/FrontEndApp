@@ -1,48 +1,49 @@
-import React, { ReactNode } from 'react';
-import Link from 'next/link';
-import Head from 'next/head';
+import {ReactNode} from "react"
+import Head from "next/head"
+import {Box, Container, Flex, Heading} from "@chakra-ui/react"
+import {Logo} from "./Logo"
+import {NextChakraLink} from "./NextChakraLink"
+import UserAuthActionButtons from "./UserAuthActionButtons";
 
 type Props = {
-  children?: ReactNode
-  title?: string
+    children?: ReactNode
+    title?: string
 }
 
-const Layout = ({ children, title = 'This is the default title' }: Props) => (
-    <div>
+export const Layout = ({
+                           children,
+                           title = "This is the default title",
+                       }: Props) => (
+    <html>
         <Head>
             <title>{title}</title>
-            <meta charSet="utf-8" />
-            <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            <meta charSet="utf-8"/>
+            <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
         </Head>
         <header>
-            <nav>
-                <Link href="/">
-                    <a>Home</a>
-                </Link>
-                {' '}
-                |
-                {' '}
-                <Link href="/about">
-                    <a>About</a>
-                </Link>
-                {' '}
-                |
-                {' '}
-                <Link href="/users">
-                    <a>Users List</a>
-                </Link>
-                {' '}
-                |
-                {' '}
-                <a href="/api/users">Users API</a>
-            </nav>
+            <Box shadow={"base"}>
+                <Container maxWidth={"container.xl"}>
+                    <Flex py={4} justifyContent="space-between" alignItems="center" mb={8}>
+                        <NextChakraLink
+                            href="/"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <Logo h="1.5rem" pointerEvents="none" mr={4}/>
+                            <Heading size="lg">Chakra ts</Heading>
+                        </NextChakraLink>
+                        <UserAuthActionButtons/>
+                    </Flex>
+                </Container>
+            </Box>
         </header>
-        {children}
-        <footer>
-            <hr />
-            <span>I'm here to stay (Footer)</span>
-        </footer>
-    </div>
-);
-
-export default Layout;
+        <body>
+            <main>
+                <Container maxWidth={"container.xl"}>
+                    {children}
+                </Container>
+            </main>
+        </body>
+    </html>
+)

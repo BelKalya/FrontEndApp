@@ -5,24 +5,35 @@ schema {
     mutation: Mutation
 }
 
+type FieldError {
+    field: String!
+    message: String!
+}
+
 type Mutation {
-    register(options: UserDetails!): User!
+    login(email: String!, password: String!): UserResponse!
+    logout: Boolean!
+    register(email: String!, password: String!): UserResponse!
 }
 
 type Query {
     hello: String!
-    users: [User!]!
+    me: User
 }
 
 type User {
-    age: Float!
-    firstName: String!
+    company: String
+    contactName: String
+    description: String
+    email: String!
+    facebook: String
     id: Float!
-    lastName: String!
+    instagram: String
+    password: String!
+    twitter: String
 }
 
-input UserDetails {
-    age: Float!
-    firstName: String!
-    lastName: String!
+type UserResponse {
+    errors: [FieldError!]
+    user: User
 }
