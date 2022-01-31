@@ -2,7 +2,17 @@ mutation Register($password: String!, $email: String!) {
   register(password: $password, email: $email) {
     user {
       email
-      password
+      twitter
+      instagram
+      id
+      facebook
+      description
+      contactName
+      company
+    }
+    errors {
+      field
+      message
     }
   }
 }
