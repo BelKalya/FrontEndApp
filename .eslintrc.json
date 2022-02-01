@@ -1,24 +1,20 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
     "extends": [
-        "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "eslint:recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:jsx-a11y/recommended",
+        "plugin:sonarjs/recommended",
+        "plugin:promise/recommended",
+        "next/core-web-vitals",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": "latest",
-        "sourceType": "module"
+    "plugins": ["react", "jsx-a11y", "optimize-regex", "sonarjs", "no-loops", "no-use-extend-native", "promise"],
+    "globals": {
+        "JSX": true
     },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
     "rules": {
         "react/jsx-filename-extension": "off",
         "jsx-a11y/click-events-have-key-events": "off",
@@ -36,6 +32,8 @@
         "no-use-extend-native/no-use-extend-native": 2,
         "import/first": "error",
         "react/prop-types": "off",
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
         "linebreak-style": 0,
         "max-classes-per-file": "off",
         "no-use-before-define": "off",
@@ -59,15 +57,17 @@
             "custom": "ignore",
             "explicitSpread": "enforce"
         }],
-        "no-unused-vars": "warn",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/no-explicit-any": "off",
         "object-curly-newline": "off",
         "lines-between-class-members": "off"
     },
     "settings": {
-      "import/resolver": {
-        "node": {
-          "extensions": [".ts", ".tsx", ".native.js"]
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
         }
-      }
     }
 }

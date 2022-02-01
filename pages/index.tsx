@@ -1,14 +1,13 @@
 import React from 'react';
-import {Layout} from '../components/Layout'
-import {withApollo} from "../utils/withApollo";
+import { Layout } from '../components/Layout';
+import { withApollo } from '../utils/withApollo';
 
-const Index = () => {
-
+function Index() {
     return (
         <Layout>
             <h1>This is home</h1>
         </Layout>
-    )
+    );
 }
 
 export default withApollo({ ssr: true })(Index);
