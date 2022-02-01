@@ -35,5 +35,5 @@ yarn-error.log*
 .vercel
 
 # idea
-!/.idea/codeStyles/*
 /.idea/*
+!/.idea/codeStyles
