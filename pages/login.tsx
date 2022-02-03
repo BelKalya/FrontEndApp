@@ -6,7 +6,7 @@ import { InferGetServerSidePropsType } from 'next';
 import { MeDocument, MeQuery, useLoginMutation } from '../generated/graphql';
 import { createClient, withApollo } from '../utils/withApollo';
 import FormInput from '../components/FormInput';
-import { Layout } from '../components/Layout';
+import Layout from '../components/Layout';
 import { INVALID_EMAIL, INVALID_PASSWORD, REQUIRED } from '../utils/validation-errors';
 import { EMAIL_VALIDATION_REGEXP, PASSWORD_VALIDATION_REGEXP } from '../utils/constants';
 import { NextChakraLink } from '../components/NextChakraLink';

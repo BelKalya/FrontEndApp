@@ -2,7 +2,7 @@ import { Box, Button, Heading } from '@chakra-ui/react';
 import React from 'react';
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
-import { Layout } from '../components/Layout';
+import Layout from '../components/Layout';
 import { EMAIL_VALIDATION_REGEXP, PASSWORD_VALIDATION_REGEXP } from '../utils/constants';
 import { INVALID_EMAIL, INVALID_PASSWORD, REQUIRED } from '../utils/validation-errors';
 import { MeDocument, MeQuery, useRegisterMutation } from '../generated/graphql';

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { ReactNode } from 'react';
 import Head from 'next/head';
 import { Box, Container, Flex, Heading } from '@chakra-ui/react';
@@ -11,9 +10,14 @@ type Props = {
     title?: string
 }
 
-export function Layout({
+const defaultProps = {
+    children: null,
+    title: 'This is the default title',
+};
+
+function Layout({
     children,
-    title = 'This is the default title',
+    title,
 }: Props) {
     return (
         <>
@@ -48,3 +52,7 @@ export function Layout({
         </>
     );
 }
+
+Layout.defaultProps = defaultProps;
+
+export default Layout;

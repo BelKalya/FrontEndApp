@@ -1,18 +1,15 @@
-import React from 'react';
-import { Box, Button, Flex, Skeleton } from '@chakra-ui/react';
 import { useApolloClient } from '@apollo/client';
-import { isServer } from '../utils/isServer';
+import { Box, Button, Flex, Skeleton } from '@chakra-ui/react';
+import React from 'react';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 import { NextChakraLink } from './NextChakraLink';
 
 function UserAuthActionButtons() {
-    const { data, loading } = useMeQuery({
-        skip: isServer(),
-    });
+    const { data, loading } = useMeQuery();
     const [logout] = useLogoutMutation();
     const apolloClient = useApolloClient();
 
-    if (loading || isServer()) {
+    if (loading) {
         return <Skeleton />;
     }
     if (!data?.me) {
