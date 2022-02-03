@@ -1,53 +1,32 @@
-import React, { useEffect } from 'react';
+import { Box, Button, Heading } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
-import { Box, Button, Heading, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { InferGetServerSidePropsType } from 'next';
-import { MeDocument, MeQuery, useLoginMutation } from '../generated/graphql';
-import { createClient, withApollo } from '../utils/withApollo';
+import React, { useEffect } from 'react';
+import AlreadyLoggedIn from '../components/AlreadyLoggedIn';
 import FormInput from '../components/FormInput';
 import Layout from '../components/Layout';
-import { INVALID_EMAIL, INVALID_PASSWORD, REQUIRED } from '../utils/validation-errors';
+import { MeDocument, MeQuery, useLoginMutation, useMeQuery } from '../generated/graphql';
 import { EMAIL_VALIDATION_REGEXP, PASSWORD_VALIDATION_REGEXP } from '../utils/constants';
-import { NextChakraLink } from '../components/NextChakraLink';
+import { INVALID_EMAIL, INVALID_PASSWORD, REQUIRED } from '../utils/validation-errors';
+import { withApollo } from '../utils/withApollo';
 
-export async function getServerSideProps(context) {
-    const client = createClient(context);
-    const { data } = await client.query<MeQuery>({ query: MeDocument });
-
-    return {
-        props: {
-            user: data.me,
-        },
-    };
-}
-
-function Login({ user }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function Login() {
+    const { data: user } = useMeQuery();
     const router = useRouter();
     const [login] = useLoginMutation();
+
     useEffect(() => {
-        if (user) {
+        if (user?.me) {
             setTimeout(() => { router.replace('/'); }, 3000);
         }
     });
 
-    if (user) {
+    if (user?.me) {
         return (
-            <Layout title="Login">
-                <Heading mb={8}>You are already logged in</Heading>
-                <Box>
-                    <Text fontSize="lg" lineHeight="tall">
-                        You will be redirected to the homepage shortly
-                    </Text>
-                    <Text fontSize="lg" lineHeight="tall">
-                        If redirect didn&apos;t happen in 5 seconds please click this
-                        {' '}
-                        <NextChakraLink fontWeight="bold" href="/">Link</NextChakraLink>
-                    </Text>
-                </Box>
-            </Layout>
+            <AlreadyLoggedIn title="Login" />
         );
     }
+
     return (
         <Layout title="Login">
             <Box maxW={600} m="0 auto">
@@ -130,4 +109,4 @@ function Login({ user }: InferGetServerSidePropsType<typeof getServerSideProps>)
     );
 }
 
-export default withApollo({ ssr: false })(Login);
+export default withApollo({ ssr: true })(Login);

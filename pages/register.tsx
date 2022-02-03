@@ -1,17 +1,32 @@
 import { Box, Button, Heading } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
+import AlreadyLoggedIn from '../components/AlreadyLoggedIn';
 import Layout from '../components/Layout';
 import { EMAIL_VALIDATION_REGEXP, PASSWORD_VALIDATION_REGEXP } from '../utils/constants';
 import { INVALID_EMAIL, INVALID_PASSWORD, REQUIRED } from '../utils/validation-errors';
-import { MeDocument, MeQuery, useRegisterMutation } from '../generated/graphql';
+import { MeDocument, MeQuery, useMeQuery, useRegisterMutation } from '../generated/graphql';
 import FormInput from '../components/FormInput';
 import { withApollo } from '../utils/withApollo';
 
 function Register() {
+    const { data: user } = useMeQuery();
     const router = useRouter();
     const [registerMutation] = useRegisterMutation();
+
+    useEffect(() => {
+        if (user?.me) {
+            setTimeout(() => { router.replace('/'); }, 3000);
+        }
+    });
+
+    if (user?.me) {
+        return (
+            <AlreadyLoggedIn title="Registration" />
+        );
+    }
+
     return (
         <Layout title="Registration">
             <Box maxW={600} m="0 auto">
@@ -92,4 +107,4 @@ function Register() {
     );
 }
 
-export default withApollo({ ssr: false })(Register);
+export default withApollo({ ssr: true })(Register);
