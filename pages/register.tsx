@@ -63,7 +63,7 @@ function Register() {
                         if (response.data?.register.errors) {
                             setErrors(Object.fromEntries(response.data.register.errors.map((e) => [e.field, e.message])));
                         } else if (response.data?.register.user) {
-                            // TODO redirect to MyAccount?
+                            // TODO redirect to MyAccount? YES
                             router.push('/');
                         }
                     }}

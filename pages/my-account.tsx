@@ -5,32 +5,40 @@ import React, { useEffect } from 'react';
 import AlreadyLoggedIn from '../components/AlreadyLoggedIn';
 import FormInput from '../components/FormInput';
 import Layout from '../components/Layout';
+import NeedToLogIn from '../components/NeedToLogIn';
 import { MeDocument, MeQuery, useLoginMutation, useMeQuery } from '../generated/graphql';
 import { EMAIL_VALIDATION_REGEXP } from '../utils/constants';
 import { INVALID_EMAIL, REQUIRED } from '../utils/validation-errors';
 import { withApollo } from '../utils/withApollo';
 
-function Login() {
+function MyAccount() {
     const { data: user } = useMeQuery();
     const router = useRouter();
     const [login] = useLoginMutation();
 
     useEffect(() => {
-        if (user?.me) {
-            setTimeout(() => { router.replace('/'); }, 3000);
+        if (!user?.me) {
+            setTimeout(() => { router.replace('/login'); }, 3000);
         }
     });
 
-    if (user?.me) {
+    if (!user?.me) {
         return (
-            <AlreadyLoggedIn title="Login" />
+            <NeedToLogIn title="Login" />
         );
     }
 
+    /*document.addEventListener('DOMContentLoaded', () => {
+        Object.entries(user.me).forEach(([key, value]) => {
+            document.getElementsByName(key).value(value);
+        });
+    });*/
+    console.log(user.me.email);
+
     return (
-        <Layout title="Login">
+        <Layout title="My Account">
             <Box maxW={600} m="0 auto">
-                <Heading size="xl" mb={8}>Login</Heading>
+                <Heading size="xl" mb={8}>My Account</Heading>
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     validate={(values) => {
@@ -104,4 +112,4 @@ function Login() {
     );
 }
 
-export default withApollo({ ssr: true })(Login);
+export default withApollo({ ssr: true })(MyAccount);
