@@ -1,0 +1,12 @@
+mutation Update($options: UserDetails!) {
+  update(options: $options) {
+    user {
+      company
+      description
+      contactName
+      facebook
+      instagram
+      twitter
+    }
+  }
+}

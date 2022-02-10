@@ -26,6 +26,7 @@ export type Mutation = {
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
+  update: UserResponse;
 };
 
 
@@ -38,6 +39,11 @@ export type MutationLoginArgs = {
 export type MutationRegisterArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationUpdateArgs = {
+  options: UserDetails;
 };
 
 export type Query = {
@@ -56,6 +62,17 @@ export type User = {
   id: Scalars['Float'];
   instagram?: Maybe<Scalars['String']>;
   twitter?: Maybe<Scalars['String']>;
+};
+
+export type UserDetails = {
+  company?: InputMaybe<Scalars['String']>;
+  contactName?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  email: Scalars['String'];
+  facebook?: InputMaybe<Scalars['String']>;
+  instagram?: InputMaybe<Scalars['String']>;
+  password: Scalars['String'];
+  twitter?: InputMaybe<Scalars['String']>;
 };
 
 export type UserResponse = {
@@ -84,6 +101,13 @@ export type RegisterMutationVariables = Exact<{
 
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', email: string, twitter?: string | null | undefined, instagram?: string | null | undefined, id: number, facebook?: string | null | undefined, description?: string | null | undefined, contactName?: string | null | undefined, company?: string | null | undefined } | null | undefined, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null | undefined } };
+
+export type UpdateMutationVariables = Exact<{
+  options: UserDetails;
+}>;
+
+
+export type UpdateMutation = { __typename?: 'Mutation', update: { __typename?: 'UserResponse', user?: { __typename?: 'User', company?: string | null | undefined, description?: string | null | undefined, contactName?: string | null | undefined, facebook?: string | null | undefined, instagram?: string | null | undefined, twitter?: string | null | undefined } | null | undefined } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -215,6 +239,46 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const UpdateDocument = gql`
+    mutation Update($options: UserDetails!) {
+  update(options: $options) {
+    user {
+      company
+      description
+      contactName
+      facebook
+      instagram
+      twitter
+    }
+  }
+}
+    `;
+export type UpdateMutationFn = Apollo.MutationFunction<UpdateMutation, UpdateMutationVariables>;
+
+/**
+ * __useUpdateMutation__
+ *
+ * To run a mutation, you first call `useUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateMutation, { data, loading, error }] = useUpdateMutation({
+ *   variables: {
+ *      options: // value for 'options'
+ *   },
+ * });
+ */
+export function useUpdateMutation(baseOptions?: Apollo.MutationHookOptions<UpdateMutation, UpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateMutation, UpdateMutationVariables>(UpdateDocument, options);
+      }
+export type UpdateMutationHookResult = ReturnType<typeof useUpdateMutation>;
+export type UpdateMutationResult = Apollo.MutationResult<UpdateMutation>;
+export type UpdateMutationOptions = Apollo.BaseMutationOptions<UpdateMutation, UpdateMutationVariables>;
 export const MeDocument = gql`
     query Me {
   me {
