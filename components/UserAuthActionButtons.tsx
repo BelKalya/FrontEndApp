@@ -1,5 +1,7 @@
 import { useApolloClient } from '@apollo/client';
 import { Box, Button, Flex, Skeleton } from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import { useLogoutMutation, useMeQuery } from '../generated/graphql';
 import { NextChakraLink } from './NextChakraLink';
@@ -26,7 +28,9 @@ function UserAuthActionButtons() {
     }
     return (
         <Flex align="center">
-            <Box mr={2}>{data.me.email}</Box>
+            <NextChakraLink mr={4} href="/my-account">
+                <FontAwesomeIcon icon={faUser} />
+            </NextChakraLink>
             <Button
                 onClick={async () => {
                     await logout();

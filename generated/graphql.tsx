@@ -68,10 +68,8 @@ export type UserDetails = {
   company?: InputMaybe<Scalars['String']>;
   contactName?: InputMaybe<Scalars['String']>;
   description?: InputMaybe<Scalars['String']>;
-  email: Scalars['String'];
   facebook?: InputMaybe<Scalars['String']>;
   instagram?: InputMaybe<Scalars['String']>;
-  password: Scalars['String'];
   twitter?: InputMaybe<Scalars['String']>;
 };
 
